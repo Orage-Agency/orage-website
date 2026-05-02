@@ -58,7 +58,7 @@ function saveMessages(messages: Message[]) {
 const WELCOME: Message = {
   id: "welcome",
   role: "assistant",
-  text: "Hey! I'm Stacy from Orage AI — happy to help. What brings you here today?",
+  text: "Hey, I'm Stacy — Orage AI's assistant. I'm here to help. Got a question about our services, or ready to book a strategy call?",
   timestamp: Date.now(),
 }
 
@@ -156,18 +156,6 @@ export function LiquidGlassChatWidget() {
       sessionIdRef.current = loadSessionId()
     }
     setMessages([WELCOME])
-  }
-
-  const handoffToHuman = () => {
-    // Build a brief context blob for the team
-    const recent = messages.slice(-6).map(m => `${m.role === "user" ? "You" : "Stacy"}: ${m.text}`).join("\n")
-    const subject = encodeURIComponent("Question from orage.agency chat — needs a human")
-    const body = encodeURIComponent(
-      "Hey Orage team —\n\nI was chatting with Stacy and would like to talk to a human. Recent context:\n\n" +
-      (recent || "(no prior messages)") +
-      "\n\nThanks!"
-    )
-    window.location.href = `mailto:team@orage.agency?subject=${subject}&body=${body}`
   }
 
   return (
@@ -280,7 +268,7 @@ export function LiquidGlassChatWidget() {
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <p style={{ margin: 0, fontFamily: "var(--font-main)", fontWeight: 700, fontSize: "13px", color: "#f1f0ee", letterSpacing: "0.06em", textTransform: "uppercase" }}>Stacy · Orage AI</p>
-              <p style={{ margin: 0, fontFamily: "var(--font-main)", fontSize: "11px", color: "rgba(200,180,140,0.8)", letterSpacing: "0.03em" }}>AI assistant · usually replies instantly</p>
+              <p style={{ margin: 0, fontFamily: "var(--font-main)", fontSize: "11px", color: "rgba(200,180,140,0.8)", letterSpacing: "0.03em" }}>I'm here to help</p>
             </div>
             <div title="Online" style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px rgba(74,222,128,0.6)", flexShrink: 0 }} />
             <button
@@ -396,23 +384,15 @@ export function LiquidGlassChatWidget() {
             </button>
           </div>
 
-          {/* Disclosure footer + handoff */}
+          {/* Disclosure footer */}
           <div style={{
             position: "relative", zIndex: 1,
             padding: "0 14px 10px",
             background: "rgba(0,0,0,0.4)",
-            display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px",
             fontFamily: "var(--font-main)", fontSize: "10px", color: "rgba(200,180,140,0.55)", letterSpacing: "0.02em",
+            textAlign: "center",
           }}>
-            <span style={{ flex: 1, minWidth: 0 }}>
-              AI · messages stored. <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(200,180,140,0.85)", textDecoration: "underline", textUnderlineOffset: "2px" }}>Privacy</a>
-            </span>
-            <button
-              onClick={handoffToHuman}
-              style={{ background: "none", border: "none", color: "rgba(200,180,140,0.85)", cursor: "pointer", fontSize: "10px", padding: 0, textDecoration: "underline", textUnderlineOffset: "2px", letterSpacing: "0.02em" }}
-            >
-              Talk to a human
-            </button>
+            AI · messages stored. <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(200,180,140,0.85)", textDecoration: "underline", textUnderlineOffset: "2px" }}>Privacy</a>
           </div>
         </div>
       )}
