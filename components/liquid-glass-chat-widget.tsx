@@ -15,12 +15,17 @@ interface NextStep {
   message: string
 }
 
+interface ToolAction {
+  label: string
+}
+
 interface Message {
   id: string
   role: "user" | "assistant"
   text: string
   timestamp: number
   next_steps?: NextStep[]
+  tool_actions?: ToolAction[]
 }
 
 interface OriginContext {
@@ -207,10 +212,17 @@ export function LiquidGlassChatWidget() {
             typeof (s as NextStep).message === "string"
           ).slice(0, 4)
         : undefined
+      const toolActions: ToolAction[] | undefined = Array.isArray(data?.tool_actions)
+        ? data.tool_actions.filter((a: unknown): a is ToolAction =>
+            !!a && typeof a === "object" &&
+            typeof (a as ToolAction).label === "string" &&
+            (a as ToolAction).label.length > 0
+          ).slice(0, 4)
+        : undefined
 
       setMessages(prev => [
         ...prev,
-        { id: generateId(), role: "assistant", text: reply, timestamp: Date.now(), next_steps: nextSteps },
+        { id: generateId(), role: "assistant", text: reply, timestamp: Date.now(), next_steps: nextSteps, tool_actions: toolActions },
       ])
     } catch {
       setMessages(prev => [
@@ -391,7 +403,7 @@ export function LiquidGlassChatWidget() {
             scrollbarWidth: "none",
           }}>
             {messages.map(msg => (
-              <div key={msg.id} style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start" }}>
+              <div key={msg.id} style={{ display: "flex", flexDirection: "column", alignItems: msg.role === "user" ? "flex-end" : "flex-start", gap: "6px" }}>
                 <div style={{
                   maxWidth: "82%",
                   padding: "10px 14px",
@@ -411,6 +423,33 @@ export function LiquidGlassChatWidget() {
                 }}>
                   {msg.text}
                 </div>
+
+                {/* Tool action confirmation badges (only on assistant messages with tool_actions) */}
+                {msg.role === "assistant" && msg.tool_actions && msg.tool_actions.length > 0 && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", maxWidth: "82%" }}>
+                    {msg.tool_actions.map((action, idx) => (
+                      <div
+                        key={`${msg.id}-action-${idx}`}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          padding: "5px 10px",
+                          borderRadius: "8px",
+                          background: "rgba(74,222,128,0.10)",
+                          border: "1px solid rgba(74,222,128,0.25)",
+                          fontFamily: "var(--font-main)",
+                          fontSize: "11px",
+                          color: "rgba(220,250,220,0.92)",
+                          letterSpacing: "0.01em",
+                        }}
+                      >
+                        <span style={{ color: "#4ade80", fontWeight: 700, fontSize: "12px", lineHeight: 1 }}>✓</span>
+                        <span style={{ flex: 1 }}>{action.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
 
