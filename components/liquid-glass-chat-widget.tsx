@@ -236,6 +236,32 @@ export function LiquidGlassChatWidget() {
 
   const send = useCallback(() => sendText(input), [input, sendText])
 
+  // Rotating "thinking" status while waiting for Stacy
+  const lastUserMessage = (() => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].role === "user") return messages[i].text.toLowerCase()
+    }
+    return ""
+  })()
+  const thinkingPhases = (() => {
+    if (/avail|time|book|schedule|slot|tomorrow|monday|tuesday|wednesday|thursday|friday|next week/.test(lastUserMessage)) {
+      return ["Pulling availability…", "Checking the calendar…", "Almost there…"]
+    }
+    if (/case stud|example|client|results/.test(lastUserMessage)) {
+      return ["Pulling case studies…", "Checking what fits…", "Almost there…"]
+    }
+    if (/price|cost|how much|pricing/.test(lastUserMessage)) {
+      return ["One sec…", "Pulling that up…", "Almost there…"]
+    }
+    return ["Thinking…", "Looking that up…", "Almost there…"]
+  })()
+  const [thinkingIdx, setThinkingIdx] = useState(0)
+  useEffect(() => {
+    if (!loading) { setThinkingIdx(0); return }
+    const t = setInterval(() => setThinkingIdx(i => (i + 1) % thinkingPhases.length), 2400)
+    return () => clearInterval(t)
+  }, [loading, thinkingPhases.length])
+
   // Determine which chips to show below the latest assistant message:
   //  1. Dynamic chips from Stacy's next_steps if the most-recent assistant reply has them
   //  2. Otherwise, static turn-1 chips when no user message has been sent yet
@@ -455,10 +481,25 @@ export function LiquidGlassChatWidget() {
 
             {loading && (
               <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                <div style={{ padding: "10px 16px", borderRadius: "16px 16px 16px 4px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)", display: "flex", gap: "5px", alignItems: "center" }}>
-                  {[0, 1, 2].map(i => (
-                    <span key={i} className="chat-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(200,180,140,0.8)", display: "block", animation: "dot-bounce 1.2s ease-in-out infinite", animationDelay: `${i * 0.15}s` }} />
-                  ))}
+                <div style={{
+                  padding: "10px 14px",
+                  borderRadius: "16px 16px 16px 4px",
+                  background: "rgba(255,255,255,0.1)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  display: "flex",
+                  gap: "8px",
+                  alignItems: "center",
+                  fontFamily: "var(--font-main)",
+                  fontSize: "12px",
+                  color: "rgba(220,210,180,0.85)",
+                  letterSpacing: "0.01em",
+                }}>
+                  <span style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+                    {[0, 1, 2].map(i => (
+                      <span key={i} className="chat-dot" style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(200,180,140,0.85)", display: "block", animation: "dot-bounce 1.2s ease-in-out infinite", animationDelay: `${i * 0.15}s` }} />
+                    ))}
+                  </span>
+                  <span>{thinkingPhases[thinkingIdx]}</span>
                 </div>
               </div>
             )}
