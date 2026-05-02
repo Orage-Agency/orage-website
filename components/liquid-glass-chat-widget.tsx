@@ -10,11 +10,17 @@ const STORAGE_ORIGIN_KEY = "orage_chat_origin"
 const MESSAGES_TTL_MS = 1000 * 60 * 60 * 24 // 24h
 const FALLBACK_REPLY = "Sorry — I hit a snag. Mind asking that again?"
 
+interface NextStep {
+  label: string
+  message: string
+}
+
 interface Message {
   id: string
   role: "user" | "assistant"
   text: string
   timestamp: number
+  next_steps?: NextStep[]
 }
 
 interface OriginContext {
@@ -194,10 +200,17 @@ export function LiquidGlassChatWidget() {
       const reply: string =
         data?.reply ?? data?.output ?? data?.response ?? data?.text ?? data?.message ??
         (typeof data === "string" ? data : FALLBACK_REPLY)
+      const nextSteps: NextStep[] | undefined = Array.isArray(data?.next_steps)
+        ? data.next_steps.filter((s: unknown): s is NextStep =>
+            !!s && typeof s === "object" &&
+            typeof (s as NextStep).label === "string" &&
+            typeof (s as NextStep).message === "string"
+          ).slice(0, 4)
+        : undefined
 
       setMessages(prev => [
         ...prev,
-        { id: generateId(), role: "assistant", text: reply, timestamp: Date.now() },
+        { id: generateId(), role: "assistant", text: reply, timestamp: Date.now(), next_steps: nextSteps },
       ])
     } catch {
       setMessages(prev => [
@@ -211,8 +224,22 @@ export function LiquidGlassChatWidget() {
 
   const send = useCallback(() => sendText(input), [input, sendText])
 
-  // Show chips on turn 1 (no user messages yet)
-  const showChips = hydrated && !loading && !messages.some(m => m.role === "user")
+  // Determine which chips to show below the latest assistant message:
+  //  1. Dynamic chips from Stacy's next_steps if the most-recent assistant reply has them
+  //  2. Otherwise, static turn-1 chips when no user message has been sent yet
+  //  3. Otherwise, nothing
+  const lastAssistantWithSteps = (() => {
+    if (!hydrated || loading) return null
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const m = messages[i]
+      if (m.role === "user") return null
+      if (m.role === "assistant" && m.next_steps && m.next_steps.length > 0) return m
+    }
+    return null
+  })()
+  const showStaticChips = hydrated && !loading && !messages.some(m => m.role === "user")
+  const chipsToShow: NextStep[] = lastAssistantWithSteps?.next_steps?.slice(0, 4)
+    ?? (showStaticChips ? SUGGESTION_CHIPS.map(c => ({ label: c.label, message: c.message })) : [])
 
   const handleKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -397,12 +424,12 @@ export function LiquidGlassChatWidget() {
               </div>
             )}
 
-            {/* Suggestion chips — only on turn 1 (no user messages yet) */}
-            {showChips && (
+            {/* Suggestion chips — Stacy's next_steps for the latest reply, or static chips on turn 1 */}
+            {chipsToShow.length > 0 && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "4px" }}>
-                {SUGGESTION_CHIPS.map(chip => (
+                {chipsToShow.map((chip, idx) => (
                   <button
-                    key={chip.label}
+                    key={`${chip.label}-${idx}`}
                     onClick={() => sendText(chip.message)}
                     style={{
                       background: "rgba(182,128,57,0.12)",
