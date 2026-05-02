@@ -6,14 +6,30 @@ import Image from "next/image"
 const WEBHOOK_URL = "https://orageaiagency.app.n8n.cloud/webhook/e9b95343-00f9-4772-9e76-d60aa255271e"
 const STORAGE_SESSION_KEY = "orage_chat_session_id"
 const STORAGE_MESSAGES_KEY = "orage_chat_messages"
+const STORAGE_ORIGIN_KEY = "orage_chat_origin"
 const MESSAGES_TTL_MS = 1000 * 60 * 60 * 24 // 24h
-const FALLBACK_REPLY = "Sorry — I hit a snag. Mind asking that again, or tap 'Talk to a human' below to reach the team directly."
+const FALLBACK_REPLY = "Sorry — I hit a snag. Mind asking that again?"
 
 interface Message {
   id: string
   role: "user" | "assistant"
   text: string
   timestamp: number
+}
+
+interface OriginContext {
+  utm_source?: string
+  utm_medium?: string
+  utm_campaign?: string
+  utm_content?: string
+  utm_term?: string
+  gclid?: string
+  fbclid?: string
+  ttclid?: string
+  referrer?: string
+  landing_path?: string
+  landing_url?: string
+  captured_at?: number
 }
 
 function generateId() {
@@ -30,6 +46,46 @@ function loadSessionId(): string {
     return fresh
   } catch {
     return generateId()
+  }
+}
+
+function loadOrigin(): OriginContext {
+  if (typeof window === "undefined") return {}
+  try {
+    const stored = localStorage.getItem(STORAGE_ORIGIN_KEY)
+    if (stored) {
+      const parsed = JSON.parse(stored) as OriginContext
+      if (parsed && typeof parsed === "object") return parsed
+    }
+  } catch {
+    // fall through to capture
+  }
+  // First time on the site — capture from current URL + referrer
+  try {
+    const params = new URLSearchParams(window.location.search)
+    const origin: OriginContext = {
+      utm_source: params.get("utm_source") || undefined,
+      utm_medium: params.get("utm_medium") || undefined,
+      utm_campaign: params.get("utm_campaign") || undefined,
+      utm_content: params.get("utm_content") || undefined,
+      utm_term: params.get("utm_term") || undefined,
+      gclid: params.get("gclid") || undefined,
+      fbclid: params.get("fbclid") || undefined,
+      ttclid: params.get("ttclid") || undefined,
+      referrer: document.referrer || undefined,
+      landing_path: window.location.pathname || undefined,
+      landing_url: window.location.href || undefined,
+      captured_at: Date.now(),
+    }
+    // Drop undefined keys for a cleaner payload
+    const trimmed: OriginContext = {}
+    for (const [k, v] of Object.entries(origin)) {
+      if (v !== undefined && v !== "") (trimmed as Record<string, unknown>)[k] = v
+    }
+    localStorage.setItem(STORAGE_ORIGIN_KEY, JSON.stringify(trimmed))
+    return trimmed
+  } catch {
+    return {}
   }
 }
 
@@ -78,10 +134,12 @@ export function LiquidGlassChatWidget() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const sessionIdRef = useRef<string>("")
+  const originRef = useRef<OriginContext>({})
 
-  // Hydrate session + messages on mount (avoids SSR mismatch)
+  // Hydrate session + messages + origin on mount (avoids SSR mismatch)
   useEffect(() => {
     sessionIdRef.current = loadSessionId()
+    originRef.current = loadOrigin()
     const stored = loadMessages()
     if (stored.length > 0) setMessages(stored)
     setHydrated(true)
@@ -126,7 +184,11 @@ export function LiquidGlassChatWidget() {
       const res = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed, sessionId: sessionIdRef.current }),
+        body: JSON.stringify({
+          message: trimmed,
+          sessionId: sessionIdRef.current,
+          origin: originRef.current,
+        }),
       })
       const data = await res.json().catch(() => null)
       const reply: string =
