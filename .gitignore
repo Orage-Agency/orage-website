@@ -26,3 +26,7 @@ out/
 # editors
 .vscode/
 .idea/
+
+# debug dumps
+Usersgeorg*
+stacy_current_sysmsg.txt
