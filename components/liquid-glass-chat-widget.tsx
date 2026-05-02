@@ -62,6 +62,13 @@ const WELCOME: Message = {
   timestamp: Date.now(),
 }
 
+const SUGGESTION_CHIPS: { label: string; message: string }[] = [
+  { label: "What does Orage do?", message: "What does Orage actually do?" },
+  { label: "How much?", message: "How much do your services cost?" },
+  { label: "Show case studies", message: "Can you share some case studies of businesses you've helped?" },
+  { label: "Book a strategy call", message: "I'd like to book a free 30-minute strategy call." },
+]
+
 export function LiquidGlassChatWidget() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([WELCOME])
@@ -106,11 +113,11 @@ export function LiquidGlassChatWidget() {
     return () => window.removeEventListener("keydown", onKey)
   }, [open])
 
-  const send = useCallback(async () => {
-    const text = input.trim()
-    if (!text || loading) return
+  const sendText = useCallback(async (text: string) => {
+    const trimmed = text.trim()
+    if (!trimmed || loading) return
 
-    const userMsg: Message = { id: generateId(), role: "user", text, timestamp: Date.now() }
+    const userMsg: Message = { id: generateId(), role: "user", text: trimmed, timestamp: Date.now() }
     setMessages(prev => [...prev, userMsg])
     setInput("")
     setLoading(true)
@@ -119,7 +126,7 @@ export function LiquidGlassChatWidget() {
       const res = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, sessionId: sessionIdRef.current }),
+        body: JSON.stringify({ message: trimmed, sessionId: sessionIdRef.current }),
       })
       const data = await res.json().catch(() => null)
       const reply: string =
@@ -138,7 +145,12 @@ export function LiquidGlassChatWidget() {
     } finally {
       setLoading(false)
     }
-  }, [input, loading])
+  }, [loading])
+
+  const send = useCallback(() => sendText(input), [input, sendText])
+
+  // Show chips on turn 1 (no user messages yet)
+  const showChips = hydrated && !loading && !messages.some(m => m.role === "user")
 
   const handleKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -322,6 +334,35 @@ export function LiquidGlassChatWidget() {
                 </div>
               </div>
             )}
+
+            {/* Suggestion chips — only on turn 1 (no user messages yet) */}
+            {showChips && (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "4px" }}>
+                {SUGGESTION_CHIPS.map(chip => (
+                  <button
+                    key={chip.label}
+                    onClick={() => sendText(chip.message)}
+                    style={{
+                      background: "rgba(182,128,57,0.12)",
+                      border: "1px solid rgba(182,128,57,0.45)",
+                      color: "rgba(240,238,234,0.95)",
+                      borderRadius: "999px",
+                      padding: "6px 12px",
+                      fontFamily: "var(--font-main)",
+                      fontSize: "12px",
+                      letterSpacing: "0.01em",
+                      cursor: "pointer",
+                      transition: "background 0.15s ease, transform 0.15s ease",
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(182,128,57,0.25)" }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(182,128,57,0.12)" }}
+                  >
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
             <div ref={bottomRef} />
           </div>
 
