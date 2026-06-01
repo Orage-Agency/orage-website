@@ -33,7 +33,7 @@ export function LiquidGlassBanner() {
             <p className="liquid-glass-text">
               Ready to maximize efficiency and scale your business?
             </p>
-            <a href="https://ff.orage.agency/" className="liquid-glass-cta">
+            <a href="https://onedayback.orage.agency/" className="liquid-glass-cta">
               Learn to Scale
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="liquid-glass-arrow" aria-hidden="true">
                 <path d="M3.33 8h9.34M8.67 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
