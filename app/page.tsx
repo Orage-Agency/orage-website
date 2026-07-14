@@ -235,10 +235,9 @@ export default function Page() {
                 zIndex: 2, pointerEvents: "none",
               }} />
               <img
-                src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bb60603147fd01594d365d.jpg"
-                alt="Our Founders"
-                style={{ width: "100%", display: "block", objectFit: "cover", aspectRatio: "3/4" }}
-                crossOrigin="anonymous"
+                src="/founder.jpg"
+                alt="George Moffat — Founder"
+                style={{ width: "100%", display: "block", objectFit: "cover", aspectRatio: "1/1" }}
               />
             </div>
 
@@ -249,16 +248,15 @@ export default function Page() {
                   className="diagonal-reveal"
                   style={{ display: "block" }}
                 >
-                  OUR FOUNDERS
+                  OUR FOUNDER
                 </span>
               </h2>
               <p className="about-body">
-                We operate at the crossroads of AI strategy, marketing operations, and business
-                intelligence. Our team has identified and closed over{" "}
-                <span style={{ color: "#B68039", fontWeight: 700 }}>10+ million dollars</span> in
-                operational gaps for service businesses — by finding the exact lever that unlocks
-                growth and building custom AI systems to pull it. We don't sell software. We build
-                the infrastructure that makes your business run without you running it.
+                We bridge the gap between using technology and using AI to provide opportunity.
+                Orage is a people-first AI company — we believe people are the ones who should
+                benefit from this technology. And we&apos;re AI-first: focused on helping businesses{" "}
+                <span style={{ color: "#B68039", fontWeight: 700 }}>maximize efficiency and growth</span>{" "}
+                by using AI.
               </p>
             </div>
           </div>
