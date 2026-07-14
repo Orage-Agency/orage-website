@@ -70,7 +70,7 @@ export default function Page() {
             <span className="hero-line-clear">
               READY TO SCALE YOUR{" "}
               <a
-                href="https://onedayback.orage.agency/"
+                href="https://onedayback.orage.agency/?utm_source=orage_website&utm_medium=cta&utm_content=hero_bubble"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hero-glass-bubble"
@@ -92,7 +92,7 @@ export default function Page() {
               </p>
             </div>
             <div className="hero-cta-controls">
-              <a href="https://onedayback.orage.agency/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
+              <a href="https://onedayback.orage.agency/?utm_source=orage_website&utm_medium=cta&utm_content=hero_get_started" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
                 <LiquidMetalButton
                   label="Get Started"
                   viewMode="text"
@@ -266,7 +266,7 @@ export default function Page() {
         <footer id="contact">
           <div className="footer-grid">
             <div>
-              <a href="https://onedayback.orage.agency/" target="_blank" rel="noopener noreferrer" className="footer-cta">
+              <a href="https://onedayback.orage.agency/?utm_source=orage_website&utm_medium=cta&utm_content=footer_cta" target="_blank" rel="noopener noreferrer" className="footer-cta">
                 TAKING THE WORLD BY STORM
               </a>
             </div>
@@ -277,7 +277,7 @@ export default function Page() {
                 <li><a href="https://www.instagram.com/moffat.ai/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                 <li><a href="https://www.facebook.com/georgewmoffat" target="_blank" rel="noopener noreferrer">Facebook</a></li>
                 <li><a href="https://whop.com/joined/orage/products/enterpriseai/" target="_blank" rel="noopener noreferrer">AI For Business</a></li>
-                <li><a href="https://onedayback.orage.agency/" target="_blank" rel="noopener noreferrer">Scale Your Business</a></li>
+                <li><a href="https://onedayback.orage.agency/?utm_source=orage_website&utm_medium=cta&utm_content=footer_nav" target="_blank" rel="noopener noreferrer">Scale Your Business</a></li>
               </ul>
             </div>
             <div className="footer-location">
