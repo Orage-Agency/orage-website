@@ -342,7 +342,7 @@ export function LiquidGlassChatWidget() {
         style={{
           position: "fixed",
           bottom: "28px",
-          right: "28px",
+          right: "96px",
           zIndex: 9999,
           width: "60px",
           height: "60px",
