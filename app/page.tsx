@@ -2,7 +2,6 @@
 
 import { useEffect } from "react"
 import { LiquidMetalButton } from "@/components/liquid-metal-button"
-import { ViewModeToggle } from "@/components/view-mode-toggle"
 import { AIHeroSection } from "@/components/ai-hero-section"
 import { TrustedBy } from "@/components/trusted-by"
 import { LiquidGlassBanner } from "@/components/liquid-glass-banner"
@@ -93,7 +92,6 @@ export default function Page() {
               </p>
             </div>
             <div className="hero-cta-controls">
-              <ViewModeToggle />
               <a href="https://onedayback.orage.agency/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
                 <LiquidMetalButton
                   label="Get Started"
@@ -122,7 +120,7 @@ export default function Page() {
 
           <div className="diagonal-grid">
             {/* Project 1 */}
-            <a href="#maximize-ltv" className="project-card" id="maximize-ltv">
+            <div className="project-card" id="maximize-ltv">
               <div className="project-image-wrapper" style={{ aspectRatio: "16/9" }}>
                 <img
                   src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bc29513147fd3f1e601353.jpg"
@@ -130,21 +128,21 @@ export default function Page() {
                   className="project-image"
                   width={1200}
                   height={675}
-                  loading="lazy"
+                  loading="eager"
                 />
               </div>
               <div className="project-info">
                 <div className="project-category-glass">
-                  <span className="project-category">LTV (Lifetime Value): The total profit you can expect from a client over their entire relationship with you.</span>
+                  <span className="project-category">Automate follow-up, retention, and upsells — grow profit per client on autopilot.</span>
                 </div>
                 <h2 className="project-title" data-text="MAXIMIZE LTV">MAXIMIZE LTV</h2>
                 <p className="project-subtitle">& INCREASE CONVERSION RATE</p>
               </div>
               <div className="line-accent" style={{ width: "100%", height: "1px", top: 0, left: "-50px" }} />
-            </a>
+            </div>
 
             {/* Project 2 */}
-            <a href="#increase-efficiency" className="project-card" id="increase-efficiency">
+            <div className="project-card" id="increase-efficiency">
               <div className="project-image-wrapper" style={{ aspectRatio: "16/9" }}>
                 <img
                   src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bc2951a37cc24a66066e33.jpg"
@@ -152,21 +150,21 @@ export default function Page() {
                   className="project-image"
                   width={1200}
                   height={675}
-                  loading="lazy"
+                  loading="eager"
                 />
               </div>
               <div className="project-info">
                 <div className="project-category-glass">
-                  <span className="project-category">INCREASE EFFICIENCY</span>
+                  <span className="project-category">Give your team AI leverage — same headcount, twice the output.</span>
                 </div>
                 <h2 className="project-title" data-text="2X YOUR TEAM'S OUTPUT">
                   2X YOUR TEAM'S OUTPUT
                 </h2>
               </div>
-            </a>
+            </div>
 
             {/* Project 3 */}
-            <a href="#scale-business" className="project-card" id="scale-business">
+            <div className="project-card" id="scale-business">
               <div className="project-image-wrapper" style={{ aspectRatio: "16/9" }}>
                 <img
                   src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bc29512f0e9a7b69b66db9.jpg"
@@ -174,19 +172,19 @@ export default function Page() {
                   className="project-image"
                   width={1200}
                   height={675}
-                  loading="lazy"
+                  loading="eager"
                 />
               </div>
               <div className="project-info">
                 <div className="project-category-glass">
-                  <span className="project-category">Scale your business intelligently with AI-driven insights and automated workflows designed to do the heavy lifting.</span>
+                  <span className="project-category">AI-driven insights and automated workflows that do the heavy lifting for you.</span>
                 </div>
                 <h2 className="project-title" data-text="SCALE YOUR BUSINESS">SCALE YOUR BUSINESS</h2>
               </div>
-            </a>
+            </div>
 
             {/* Project 4 */}
-            <a href="#learn-ai" className="project-card" id="learn-ai">
+            <div className="project-card" id="learn-ai">
               <div className="project-image-wrapper" style={{ aspectRatio: "16/9" }}>
                 <img
                   src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bc29517e33efe14476b855.jpg"
@@ -194,16 +192,16 @@ export default function Page() {
                   className="project-image"
                   width={1200}
                   height={675}
-                  loading="lazy"
+                  loading="eager"
                 />
               </div>
               <div className="project-info">
                 <div className="project-category-glass">
-                  <span className="project-category">Fundamentals that will transform the way you interact with the technology, the biggest return on your time this year.</span>
+                  <span className="project-category">Master the fundamentals — the biggest return on your time this year.</span>
                 </div>
                 <h2 className="project-title" data-text="LEARN AI">LEARN AI</h2>
               </div>
-            </a>
+            </div>
           </div>
         </main>
 
