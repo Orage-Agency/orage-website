@@ -162,9 +162,12 @@ export function LiquidGlassChatWidget() {
     saveMessages(messages)
   }, [messages, hydrated])
 
-  // Focus input on open
+  // Focus input on open (desktop only — on touch devices auto-focus pops the
+  // keyboard and makes iOS Safari zoom/shift the whole page)
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 300)
+    if (!open) return
+    const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
+    if (!isTouch) setTimeout(() => inputRef.current?.focus(), 300)
   }, [open])
 
   // Scroll to bottom on new message
@@ -559,7 +562,7 @@ export function LiquidGlassChatWidget() {
                 padding: "10px 14px",
                 color: "rgba(240,238,234,0.95)",
                 fontFamily: "var(--font-main)",
-                fontSize: "14px", // 14px on mobile prevents iOS zoom
+                fontSize: "16px", // must be >=16px or iOS Safari auto-zooms the page on focus
                 lineHeight: 1.5,
                 resize: "none",
                 outline: "none",
