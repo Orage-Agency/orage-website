@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "About Us — ORAGE AI AGENCY",
-  description: "Meet the founders of ORAGE AI AGENCY. We operate at the crossroads of AI strategy, marketing operations, and business intelligence.",
+  description: "Meet the founder of ORAGE AI AGENCY. We operate at the crossroads of AI strategy, marketing operations, and business intelligence.",
 }
 
 export default function AboutUsPage() {
@@ -69,10 +69,9 @@ export default function AboutUsPage() {
               pointerEvents: "none",
             }} />
             <img
-              src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bb60603147fd01594d365d.jpg"
-              alt="Our Founders"
-              style={{ width: "100%", display: "block", objectFit: "cover", aspectRatio: "3/4" }}
-              crossOrigin="anonymous"
+              src="/founder.jpg"
+              alt="George Moffat — Founder"
+              style={{ width: "100%", display: "block", objectFit: "cover", aspectRatio: "1/1" }}
             />
           </div>
 
@@ -87,7 +86,7 @@ export default function AboutUsPage() {
               marginBottom: "24px",
               lineHeight: 1.1,
             }}>
-              Our Founders
+              Our Founder
             </h1>
             <p style={{
               fontSize: "16px",

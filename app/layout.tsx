@@ -35,20 +35,22 @@ export const metadata: Metadata = {
     siteName: "ORAGE AI AGENCY",
     title: "ORAGE AI AGENCY — Scale Your Service Business with AI",
     description: "We help service businesses doing $1M+ identify operational gaps and deploy custom AI systems that increase efficiency, boost conversions, and maximize LTV.",
-    images: [{ url: "https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bb60603147fd01594d365d.jpg", width: 1200, height: 630, alt: "ORAGE AI AGENCY Founders" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "George Moffat — Founder, ORAGE AI AGENCY" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "ORAGE AI AGENCY — Scale Your Service Business with AI",
     description: "We help service businesses doing $1M+ close operational gaps and scale with custom AI systems.",
-    images: ["https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bb60603147fd01594d365d.jpg"],
+    images: ["/og.jpg"],
   },
   icons: {
     icon: [
-      { url: "https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69b0c2eebfc81fb1ab616b02.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/logo.png", type: "image/png", sizes: "700x700" },
     ],
-    shortcut: "https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69b0c2eebfc81fb1ab616b02.png",
-    apple: "https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69b0c2eebfc81fb1ab616b02.png",
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
   },
   metadataBase: new URL("https://orage.agency"),
 }

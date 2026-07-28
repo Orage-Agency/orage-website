@@ -50,7 +50,7 @@ export default function Page() {
           <a href="#about-us" onClick={handleNavClick}>About Us</a>
           <a href="#contact" onClick={handleNavClick}>Contact</a>
         </div>
-        <div className="nav-copyright">©25</div>
+        <div className="nav-copyright">©26</div>
       </nav>
 
       <div className="container">
@@ -59,7 +59,7 @@ export default function Page() {
           <h1 className="hero-title">
             <span className="hero-line-blur" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.1em" }}>
               <img
-                src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69b0c2eebfc81fb1ab616b02.png"
+                src="/logo.png"
                 alt=""
                 aria-hidden="true"
                 className="hero-line-logo"
@@ -79,7 +79,7 @@ export default function Page() {
               </a>
             </span>
             <span className="hero-line-sub">
-              Ready to turn your business into a high-margin machine.
+              Turn your business into a high-margin machine.
             </span>
           </h1>
 
@@ -123,7 +123,7 @@ export default function Page() {
             <div className="project-card" id="maximize-ltv">
               <div className="project-image-wrapper" style={{ aspectRatio: "16/9" }}>
                 <img
-                  src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bc29513147fd3f1e601353.jpg"
+                  src="/project-ltv.jpg"
                   alt="Maximize LTV"
                   className="project-image"
                   width={1200}
@@ -145,7 +145,7 @@ export default function Page() {
             <div className="project-card" id="increase-efficiency">
               <div className="project-image-wrapper" style={{ aspectRatio: "16/9" }}>
                 <img
-                  src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bc2951a37cc24a66066e33.jpg"
+                  src="/team-output.jpg"
                   alt="2x Your Team's Output"
                   className="project-image"
                   width={1200}
@@ -167,7 +167,7 @@ export default function Page() {
             <div className="project-card" id="scale-business">
               <div className="project-image-wrapper" style={{ aspectRatio: "16/9" }}>
                 <img
-                  src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bc29512f0e9a7b69b66db9.jpg"
+                  src="/project-scale.jpg"
                   alt="Scale Your Business"
                   className="project-image"
                   width={1200}
@@ -187,7 +187,7 @@ export default function Page() {
             <div className="project-card" id="learn-ai">
               <div className="project-image-wrapper" style={{ aspectRatio: "16/9" }}>
                 <img
-                  src="https://assets.cdn.filesafe.space/651kIrlKk834C2FEl66i/media/69bc29517e33efe14476b855.jpg"
+                  src="/project-learn.jpg"
                   alt="Learn AI"
                   className="project-image"
                   width={1200}
@@ -287,14 +287,14 @@ export default function Page() {
           {/* Disclaimer Section — Brand Styled */}
           <div style={{ paddingTop: "60px", paddingBottom: "40px", textAlign: "center" }}>
             <p style={{ fontSize: "12px", color: "#94a3b8", lineHeight: 1.7, maxWidth: "900px", margin: "0 auto", fontFamily: "var(--font-main)" }}>
-              George and Brooklyn's results are not typical and are not a guarantee of your success. George and Brooklyn are experienced business owners and investors, and your results will vary depending on education, effort, application, experience, and background. George and Brooklyn do not personally invest in every business they work with through ORAGE Agency. Due to the sensitivity of financial information, we do not know all results of our students. We cannot guarantee that you will make money or that you will be successful if you employ their business strategies. Consequently, your results may significantly vary from theirs. We do not give investment, tax, or other professional advice. Specific transactions and experiences are mentioned for informational purposes only.
+              George's results are not typical and are not a guarantee of your success. George is an experienced business owner and investor, and your results will vary depending on education, effort, application, experience, and background. George does not personally invest in every business he works with through ORAGE Agency. Due to the sensitivity of financial information, we do not know all results of our students. We cannot guarantee that you will make money or that you will be successful if you employ his business strategies. Consequently, your results may significantly vary from his. We do not give investment, tax, or other professional advice. Specific transactions and experiences are mentioned for informational purposes only.
             </p>
           </div>
 
           {/* Minimal clean footer */}
           <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "32px", paddingBottom: "32px", textAlign: "center", fontSize: "13px", color: "#64748b", fontFamily: "var(--font-main)" }}>
             <p style={{ margin: "8px 0" }}>
-              © 2025 ORAGE AGENCY LLC. All Rights Reserved.
+              © 2026 ORAGE AGENCY LLC. All Rights Reserved.
             </p>
             <p style={{ margin: "12px 0 0 0", fontSize: "12px" }}>
               <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "#64748b", textDecoration: "none", marginRight: "12px" }}>Privacy</a>
